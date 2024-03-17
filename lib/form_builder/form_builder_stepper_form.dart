@@ -15,15 +15,15 @@ class FormBuilderStepperForm extends StatefulWidget {
   final Map<String, dynamic> initialValue;
   final int stepCount;
   final StepData Function(int step, Map<String, dynamic>) stepBuilder;
-  final void Function(Map<String, dynamic>) onSubmit;
+  final void Function(Map<String, dynamic>)? onSubmit;
 
   FormBuilderStepperForm({
     super.key,
     required this.stepCount,
     required this.stepBuilder,
-    required this.onSubmit,
     this.initialStep = 0,
     this.initialValue = const {},
+    this.onSubmit,
     String? backText,
     String? nextText,
     GlobalKey<FormBuilderState>? formKey,
@@ -119,7 +119,7 @@ class _StepperFormState extends State<FormBuilderStepperForm> {
 
   void Function()? _onNext(StepData currentStep) =>
       _lastStep ?
-          () => widget.onSubmit(_values) // submit if last step
+          () => widget.onSubmit?.call(_values) // submit if last step
           : () => _stepForward(currentStep);
 
   bool isValid(StepData currentStep) {
