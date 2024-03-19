@@ -4,6 +4,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 extension FormBuilderExtensions on GlobalKey<FormBuilderState> {
   Map<String, dynamic>? get saved => currentState?.value;
 
+  T? get<T>(String key) => (saved?[key] as T);
+
   Map<String, dynamic>? get instant => currentState?.instantValue;
 
   FormBuilderFields? get fields => currentState?.fields;
