@@ -1,4 +1,4 @@
-library zadart_flutter;
+library;
 
 export 'bloc/bloc_utils.dart';
 export 'flutter/flutter_extensions.dart';
