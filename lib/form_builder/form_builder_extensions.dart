@@ -11,6 +11,8 @@ extension FormBuilderExtensions on GlobalKey<FormBuilderState> {
   FormBuilderFields? get fields => currentState?.fields;
 
   void save() => currentState?.save();
+  
+  bool get isValid => currentState?.isValid ?? false;
 
   bool? saveAndValidate({ bool focusOnInvalid = false, bool autoScrollWhenFocusOnInvalid = false, }) =>
       currentState?.saveAndValidate(focusOnInvalid: focusOnInvalid, autoScrollWhenFocusOnInvalid: autoScrollWhenFocusOnInvalid);
