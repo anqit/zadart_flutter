@@ -51,4 +51,8 @@ extension ZadarFlutterDateTimeExtensions <T extends DateTime> on T {
   bool isSameDayAs(DateTime other) => DateUtils.dateOnly(this) == DateUtils.dateOnly(other);
 
   bool isToday() => isSameDayAs(DateTime.now());
+
+  TimeOfDay get time => TimeOfDay.fromDateTime(this);
+
+  DateTime withTime(TimeOfDay time) => copyWith(hour: time.hour, minute: time.minute);
 }
