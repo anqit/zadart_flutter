@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:zadart/zadart.dart';
 
 extension ZadartFlutterDateTimeRangeExtensions <T extends DateTime> on DateTimeRange<T> {
   static final _daysExpando = Expando<Iterable<DateTime>>();
@@ -54,5 +55,5 @@ extension ZadarFlutterDateTimeExtensions <T extends DateTime> on T {
 
   TimeOfDay get time => TimeOfDay.fromDateTime(this);
 
-  DateTime withTime(TimeOfDay time) => copyWith(hour: time.hour, minute: time.minute);
+  DateTime withTime(TimeOfDay? time) => time.map((t) => copyWith(hour: t.hour, minute: t.minute)) ?? this;
 }
