@@ -78,9 +78,14 @@ class _SferePointState<K, T> extends State<_SferePoint<K, T>> {
 
     final newSfere = BlocProvider.of<_SfereCubit<K, T>>(context, listen: true);
     if (_sfere != newSfere) {
-      _sfere?._remove(_id());
-      _sfere = newSfere;
-      _sync();
+      final _originalId = _id();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _sfere?._remove(_originalId);
+          _sfere = newSfere;
+          _sync();
+        }
+      });
     }
   }
 
@@ -90,10 +95,14 @@ class _SferePointState<K, T> extends State<_SferePoint<K, T>> {
 
     final oldId = _id(oldWidget);
     if (oldId != _id() || oldWidget.value != widget.value) {
-      if (oldId != _id()) {
-        _sfere?._remove(oldId);
-      }
-      _sync();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          if (oldId != _id()) {
+            _sfere?._remove(oldId);
+          }
+          _sync();
+        }
+      });
     }
   }
 
