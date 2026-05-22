@@ -174,7 +174,7 @@ class Sfere<T, V> extends SfereKeyed<Object, T, V> {
 
 class SferePointKeyed<K, T> extends StatefulWidget {
   final K? id;
-  final T value;
+  final T? value;
   final Widget child;
 
   const SferePointKeyed({
@@ -187,7 +187,7 @@ class SferePointKeyed<K, T> extends StatefulWidget {
   static SferePointKeyed<K, T> builder<K, T, V>({
     Key? key,
     required K id,
-    required T value,
+    required T? value,
     required Widget Function(BuildContext, V) builder,
     bool Function(V, V)? buildWhen,
     void Function(BuildContext, V)? listener,
@@ -205,10 +205,10 @@ class SferePointKeyed<K, T> extends StatefulWidget {
   );
 
   @override
-  State<SferePointKeyed<K, T>> createState() => _SferePointState<K, T>();
+  State<SferePointKeyed<K, T>> createState() => _SferePointKeyedState<K, T>();
 }
 
-class _SferePointState<K, T> extends State<SferePointKeyed<K, T>> {
+class _SferePointKeyedState<K, T> extends State<SferePointKeyed<K, T>> {
   _SfereTracker<K, T>? _sfere;
 
   K _id([SferePointKeyed<K, T>? w]) => ((w ?? widget).id ?? this) as K;
@@ -249,7 +249,10 @@ class _SferePointState<K, T> extends State<SferePointKeyed<K, T>> {
     super.dispose();
   }
 
-  void _sync() => _sfere?._update(_id(), widget.value);
+  void _sync() => widget.value.ifNotNull(
+    (v) => _sfere?._update(_id(), v),
+    orElse: () => _sfere?._remove(_id()),
+  );
 
   @override
   Widget build(BuildContext context) => widget.child;
@@ -264,7 +267,7 @@ class SferePoint<T> extends SferePointKeyed<Object, T> {
 
   static SferePoint<T> builder<T, V>({
     Key? key,
-    required T value,
+    required T? value,
     required Widget Function(BuildContext, V) builder,
     bool Function(V, V)? buildWhen,
     void Function(BuildContext, V)? listener,
