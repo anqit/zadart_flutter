@@ -15,4 +15,9 @@ extension ZadartFlutterStateExtensions<T extends StatefulWidget> on State<T> {
   // I don't think this is invalid
   // ignore: invalid_use_of_protected_member
   void refreshState() => setState(noop);
+
+  void setStateMounted(VoidCallback callback) {
+    // ignore: invalid_use_of_protected_member
+    if (mounted) setState(callback);
+  }
 }

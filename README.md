@@ -1,39 +1,103 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# zadart_flutter
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Flutter companion to the [`zadart`](https://pub.dev/packages/zadart) package —
+general-purpose widgets, extensions, and utilities for building Flutter apps.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+```yaml
+dependencies:
+  zadart_flutter: ^0.1.0
+```
 
 ```dart
-const like = 'sample';
+import 'package:zadart_flutter/zadart_flutter.dart';
 ```
+
+## What's inside
+
+### Widget & `State` extensions
+
+```dart
+// Wrap a widget — or a whole list of them — in Expanded.
+myWidget.expandWrapped();
+[a, b, c].expandWrapped(); // List<Expanded>
+
+// Inside a State:
+refreshState();               // setState with no changes, to force a rebuild
+setStateMounted(() => ...);   // setState only if the State is still mounted
+```
+
+### Snackbars
+
+```dart
+showSnackbar(context, 'Saved!'); // hides the current snackbar first by default
+```
+
+### Date/time extensions
+
+```dart
+final range = DateTimeRange(start: start, end: end);
+range.days;              // lazily-iterated days spanned by the range
+range.months;            // first-of-month for each month spanned
+range.contains(dt);      // inclusive containment
+
+final dt = DateTime.now();
+dt.isToday();
+dt.clamp(after: earliest, before: latest);
+dt.withTime(const TimeOfDay(hour: 9, minute: 0));
+```
+
+### flutter_form_builder helpers
+
+```dart
+final formKey = GlobalKey<FormBuilderState>();
+
+formKey.isValid;
+formKey.saved;                 // the saved values map
+formKey.get<String>('email');  // typed field access
+formKey.saveAndValidate();
+validateFormFields(formKey, ['email', 'name']);
+```
+
+`FormBuilderStepperForm` wires up a multi-step form with Back/Next/Submit
+buttons and per-step validation:
+
+```dart
+FormBuilderStepperForm(
+  stepCount: 2,
+  stepBuilder: (step, values) => StepData(
+    title: 'Step ${step + 1}',
+    subtitle: '...',
+    fieldNames: const ['email'],
+    child: FormBuilderTextField(name: 'email'),
+  ),
+  onSubmit: (values) => print(values),
+);
+```
+
+### Number / currency input formatting
+
+`NumberFormatTextInputFormatter` is a `TextInputFormatter` base class that keeps
+a text field formatted (via `intl`'s `NumberFormat`) as the user types, while
+exposing the parsed `value`. Subclass it to define how the normalized text
+parses and scales for your numeric type.
+
+### bloc helpers
+
+```dart
+// Build `buildWhen`/`listenWhen`-style change predicates.
+selectedStateHasChanged<MyState, int>((s) => s.count);
+```
+
+### sfere
+
+`sfere` is a declarative state-propagation system, built on `flutter_bloc`, for
+aggregating values contributed from multiple points in the widget tree. It is
+included but still lightly documented — see the API docs, with fuller docs and
+examples coming in a later release.
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Built on top of [`zadart`](https://pub.dev/packages/zadart). Issues and
+contributions are welcome at <https://github.com/anqit/zadart_flutter>.
