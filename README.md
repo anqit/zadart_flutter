@@ -76,36 +76,12 @@ FormBuilderStepperForm(
 );
 ```
 
-### Number / currency input formatting
-
-`NumberFormatTextInputFormatter` is a `TextInputFormatter` base class that keeps
-a text field formatted (via `intl`'s `NumberFormat`) as the user types, while
-exposing the parsed `value`. `DecimalNumberFormatTextInputFormatter` is a
-ready-to-use implementation backed by `package:decimal` for exact (non-floating
-point) amounts:
-
-```dart
-TextField(
-  inputFormatters: [DecimalNumberFormatTextInputFormatter()],
-);
-```
-
-Subclass `NumberFormatTextInputFormatter` yourself to support a different
-numeric type.
-
 ### bloc helpers
 
 ```dart
 // Build `buildWhen`/`listenWhen`-style change predicates.
 selectedStateHasChanged<MyState, int>((s) => s.count);
 ```
-
-### sfere
-
-`sfere` is a declarative state-propagation system, built on `flutter_bloc`, for
-aggregating values contributed from multiple points in the widget tree. It is
-included but still lightly documented — see the API docs, with fuller docs and
-examples coming in a later release.
 
 ## Additional information
 
