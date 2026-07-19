@@ -80,8 +80,18 @@ FormBuilderStepperForm(
 
 `NumberFormatTextInputFormatter` is a `TextInputFormatter` base class that keeps
 a text field formatted (via `intl`'s `NumberFormat`) as the user types, while
-exposing the parsed `value`. Subclass it to define how the normalized text
-parses and scales for your numeric type.
+exposing the parsed `value`. `DecimalNumberFormatTextInputFormatter` is a
+ready-to-use implementation backed by `package:decimal` for exact (non-floating
+point) amounts:
+
+```dart
+TextField(
+  inputFormatters: [DecimalNumberFormatTextInputFormatter()],
+);
+```
+
+Subclass `NumberFormatTextInputFormatter` yourself to support a different
+numeric type.
 
 ### bloc helpers
 

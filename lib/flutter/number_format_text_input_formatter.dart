@@ -2,6 +2,11 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:zadart/zadart.dart';
 
+/// A [TextInputFormatter] that keeps a text field formatted with a
+/// [NumberFormat] as the user types, while exposing the parsed [value].
+///
+/// Subclass it and implement [parseNormalized], [scale], and
+/// [toNumberFormattable] to support a particular numeric type [T].
 abstract class NumberFormatTextInputFormatter<T> extends TextInputFormatter {
   static final _defaultFormatter = NumberFormat.simpleCurrency(decimalDigits: 2);
   final NumberFormat formatter;
@@ -13,13 +18,15 @@ abstract class NumberFormatTextInputFormatter<T> extends TextInputFormatter {
 
   T? _lastValue;
 
+  /// The most recently parsed value.
   T? get value => _lastValue;
 
+  /// The most recently formatted text.
   String? get formatted => _formatted;
 
   NumberFormatTextInputFormatter({
-    NumberFormat? formatter,
     this.enableNegative = false,
+    NumberFormat? formatter,
   }) : formatter = formatter ?? _defaultFormatter;
 
   @override
@@ -49,10 +56,15 @@ abstract class NumberFormatTextInputFormatter<T> extends TextInputFormatter {
     );
   }
 
+  /// Parses the normalized text (editable digits with an inserted decimal
+  /// separator) into a [T].
   T parseNormalized(String normalized);
 
+  /// Scales [unscaled] to account for the formatter's [divisor] (its
+  /// multiplier, e.g. 100 for percentages).
   T scale(T unscaled, int divisor);
 
+  /// Converts [value] into a value the [NumberFormat] can format.
   dynamic toNumberFormattable(T? value);
 
   /// returns just the editable characters of the value, i.e. the digits and characters NOT added by formatting
