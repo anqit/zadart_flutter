@@ -15,8 +15,8 @@ dependencies:
   flutter_form_builder: ^10.2.0
   bloc: ^9.2.1
   flutter_bloc: ^9.1.1
-  intl: ^0.20.2
-  zadart: ^0.1.0
+  intl: ^0.20.3
+  zadart: ^0.1.1
 
 dev_dependencies:
   flutter_test:
