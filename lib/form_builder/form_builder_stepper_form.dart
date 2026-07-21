@@ -6,6 +6,9 @@ import 'package:zadart_flutter/zadart_flutter.dart';
 
 typedef Validator = bool Function(Map<String, dynamic>);
 
+/// A multi-step form built on `flutter_form_builder`, wiring up Back/Next/Submit
+/// buttons and per-step validation. Each step is described by a [StepData]
+/// returned from [stepBuilder].
 class FormBuilderStepperForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
 
@@ -143,6 +146,7 @@ class _StepperFormState extends State<FormBuilderStepperForm> {
   }
 }
 
+/// Describes a single step of a [FormBuilderStepperForm].
 class StepData {
   final String title;
   final String subtitle;
