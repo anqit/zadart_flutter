@@ -7,7 +7,7 @@ general-purpose widgets, extensions, and utilities for building Flutter apps.
 
 ```yaml
 dependencies:
-  zadart_flutter: ^0.1.0
+  zadart_flutter: ^0.2.0
 ```
 
 ```dart
